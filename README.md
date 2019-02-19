@@ -137,8 +137,7 @@ Final result 1    |  Final result 2
 
 <!-- blank line -->
 <figure class="video_container">
-  <iframe src="https://youtu.be/BP8TPvVJabA" frameborder="0" allowfullscreen="true"> </iframe>
-</figure>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/BP8TPvVJabA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></figure>
 <!-- blank line -->
 
 <!-- blank line -->
