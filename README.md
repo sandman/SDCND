@@ -64,14 +64,14 @@ Yellow/White images            |  Gaussian blur with a 13x13 kernel
 # 1. Grayscaling the image
 
 Next, we apply grayscaling on the blurred images, which makes it easier (and faster) to apply the Canny edge-detection algorithm in the following step:
-
+Grayscaled image 1              |  Grayscaled image 2
 :--------------------------:|:-------------------------:
 ![Grayscaled Image 1](/desc_images/gray_solidWhiteCurve.jpg)  |  ![Grayscaled Image 2](/desc_images/gray_solidWhiteCurve.jpg)
 
 # 1. Applying Canny edge detection
 
 To the grayscaled images, we apply the well-known Canny edge detection algorithm with low and high thresholds set according to the pixel intensities in the input image. First, we compute the median single-channel pixel intensity in the input grayscale image: v. The low and high thresholds are respectively v/3 and 2\*v/3.   
-                    Canny edge detection
+   Grayscaled images        |    Canny edge detection
 :--------------------------:|:-------------------------:
 ![Grayscaled Image 1](/desc_images/gray_solidWhiteCurve.jpg)  |  ![Canny Image 1](/desc_images/canny_solidWhiteCurve.jpg)]
 ![Grayscaled Image 2](/desc_images/gray_solidYellowCurve2.jpg)  |  ![Canny Image 2](/desc_images/canny_solidYellowCurve2.jpg)]
@@ -79,7 +79,7 @@ To the grayscaled images, we apply the well-known Canny edge detection algorithm
 # 1. Masking a region of interest (RoI) to only select potential lane lines
 
 To isolate only the lane lines, we apply a RoI mask that is tailored to the dimensions of the input image:
-                    RoI for isolating lane lines
+   RoI for isolating lanes  |  Masked lane lines in RoI
 :--------------------------:|:-------------------------:
 ![RoI Image 1](/desc_images/roi_m__solidWhiteCurve.jpg)  |  ![RoI post Image 1](/desc_images/roi_solidWhiteCurve.jpg)]
 ![RoI Image 2](/desc_images/roi_m_solidYellowCurve2.jpg)]  |   ![RoI post Image 2](/desc_images/roi_solidYellowCurve2.jpg)]
