@@ -129,7 +129,7 @@ The extrapolated lane lines are superimposed on the original image using alpha-b
 
 Final result 1    |  Final result 2
 :--------------------------:|:-------------------------:
-![Coordinate System](/desc_images/solidWhiteCurve.jpg)  |  ![Lane line extrapolation](/desc_images/solidYellowCurve2.jpg)
+![Coordinate System](/test_images_output/solidWhiteCurve.jpg)  |  ![Lane line extrapolation](/test_images_output/solidYellowCurve2.jpg)
 
 ### 2. Limitations of the pipeline
 
