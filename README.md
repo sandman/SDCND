@@ -9,20 +9,26 @@ Some concrete requirements for the project are:
 * Describe the limitations of the pipeline and discuss possible ways to improve it. 
 
 
-
-[//]: # (Image References)
-
 [image1]: ./examples/grayscale.jpg "Grayscale"
 
 ---
 
-### Reflection
+## Reflection
+The task is deceptively challenging and required considerable trial-and-error, tweaking and background study. 
 
-### 1. Pipeline description
+* __Computer vision/OpenCV__:Basics of Computer vision concepts like bitwise operations, colorspaces, Coordinate systems, Canny-edge detection etc. are essential to enable robust implementation. Understanding OpenCV's bit-level image operations are essential. OpenCV's official docmentation for Python is not very comprehensive. Hence, a lot of trial and error and debugging is necessary.
+
+* __Programming in Python__: Intermediate to advanced knowledge of Python is a necessity for efficient implementation. Constructs like lambdas, list comprehensions, map/filter, function callbacks etc. come in very handy. However, I did not strictly follow the "Pythonic" way of implementation.
+
+* __Media Processing__: The project uses a third party media processing library (MoviePy) that takes time to get familiar with, especially for a Python newbie.
+
+Overall, the Project gives a good introduction into the world of Computer Vision basics, both theory and practice. It is a good stepping stone to more advanced concepts in the field.
+
+## Pipeline description
 
 The video processing pipeline consists of the following steps:
 
-# 1. Detecting yellow and white regions in the input image
+## 1. Detecting yellow and white regions in the input image
 
 The first step in the pipeline is to isolate the white and yellow regions in the input RGB image. This allows the lane lines (which are white and/or yellow in color) to be clearly identified in the input image. The RGB colorspace is not ideal for detecting yellow lines, particularly in low-light/shadowed images. This is because the RGB colorspace is highly sensitive to changes in brightness: hence in images with shadows or bright sunlight, the range for Yellow lanes in the RGB model will vary a lot. For a more in-depth description of this, refer to this [paper](https://www.researchgate.net/publication/220777443_An_Adaptive_Method_for_Lane_Marking_Detection_Based_on_HSI_Color_Model)
 
@@ -52,7 +58,7 @@ Original images             |  Yellow and White regions
 ![HSL Original_im2](/desc_images/orig_solidYellowCurve2.jpg)   |   ![HSL Cylinder](/desc_images/wy_solidYellowCurve2.jpg)
 
 
-# 2. Applying Gaussian blurring
+## 2. Applying Gaussian blurring
 
 Gaussian blurring blurs sharp gradients and noise in the input image making it easier to detect pronounced edges later in the pipeline. We use a kernel of size 13 in order to ensure robust edge detection. Higher order kernels require increased computation time, which is an important factor for real-time video processing.
 
@@ -61,7 +67,7 @@ Yellow/White images            |  Gaussian blur with a 13x13 kernel
 ![Yellow_white_im1](/desc_images/wy_solidWhiteCurve.jpg)  |  ![Blur_Yellow_white_im1](/desc_images/blur_solidWhiteCurve.jpg)
 ![Yellow_white_im2](/desc_images/wy_solidYellowCurve2.jpg)   |   ![Blur Yellow_white_im2](/desc_images/blur_solidYellowCurve2.jpg)
 
-# 3. Grayscaling the image
+## 3. Grayscaling the image
 
 Next, we apply grayscaling on the blurred images, which makes it easier (and faster) to apply the Canny edge-detection algorithm in the following step:
 
@@ -69,7 +75,7 @@ Grayscaled image 1           |    Grayscaled image 2
 :--------------------------:|:-------------------------:
 ![Grayscaled Image 1](/desc_images/gray_solidWhiteCurve.jpg)  |  ![Grayscaled Image 2](/desc_images/gray_solidWhiteCurve.jpg)
 
-# 4. Applying Canny edge detection
+## 4. Applying Canny edge detection
 
 To the grayscaled images, we apply the well-known Canny edge detection algorithm with low and high thresholds set according to the pixel intensities in the input image. First, we compute the median single-channel pixel intensity in the input grayscale image: v. The low and high thresholds are respectively v\/3 and 2\*v/3.
 
@@ -78,7 +84,7 @@ Grayscaled images           |    Canny edge detection
 ![Grayscaled Image 1](/desc_images/gray_solidWhiteCurve.jpg)  |  ![Canny Image 1](/desc_images/canny_solidWhiteCurve.jpg)
 ![Grayscaled Image 2](/desc_images/gray_solidYellowCurve2.jpg)  |  ![Canny Image 2](/desc_images/canny_solidYellowCurve2.jpg)
 
-# 5. Masking a region of interest (RoI) to only select potential lane lines
+## 5. Masking a region of interest (RoI) to only select potential lane lines
 
 To isolate only the lane lines, we apply a RoI mask that is tailored to the dimensions of the input image:
 
@@ -87,7 +93,7 @@ RoI for isolating lanes     |  Masked lane lines in RoI
 ![RoI Image 1](/desc_images/roi_m_solidWhiteCurve.jpg)  |  ![RoI post Image 1](/desc_images/roi_solidWhiteCurve.jpg)
 ![RoI Image 2](/desc_images/roi_m_solidYellowCurve2.jpg)  |   ![RoI post Image 2](/desc_images/roi_solidYellowCurve2.jpg)
 
-# 6. Applying the Probabilistic Hough Transform for detecting lines
+## 6. Applying the Probabilistic Hough Transform for detecting lines
 
 We next apply OpenCV's Probablistic Hough Transform for detecting lane lines in the RoI. The algorithm is implemented by the HoughLinesP function with the following parameters: 
 
@@ -102,7 +108,7 @@ The Hough Transform outputs a set of line segments ('Hough lines') detected in t
 [[  0 539 959 539]], [[  0 537 959 537]], [[  0 538 959 538]], [[521 342 958 536]], [[524 342 957 535]], [[ 11 536 448 342]], [[  1 536 436 342]], [[  8 536 445 342]], [[517 342 954 536]], [[  2 536 439 342]], [[511 342 948 536]], [[  6 536 442 342]], [[514 342 951 536]], [[527 342 805 466]], [[232 431 432 342]], [[ 15 536 452 342]], [[529 342 686 412]], [[487 342 946 536]], [[558 354 874 536]], [[446 342 551 351]], [[454 342 539 348]], [[291 462 438 343]], [[282 460 425 344]], [[589 368 893 536]], [[520 342 956 536]], [[508 342 930 529]], [[424 344 549 350]], [[102 490 434 342]], [[475 342 540 346]], [[426 345 496 348]], [[281 462 429 342]], [[405 353 498 342]]
 ```
 
-# 7. Extrapolating the lane lines to the end and start of the road
+## 7. Extrapolating the lane lines to the end and start of the road
 
 The Hough lines are fed to a function that draws the final lane lines on the original image. 
 
@@ -125,7 +131,7 @@ Coordinate System     |  Lane line extrapolation end-points
 
 *If no line is detected by the Hough filter on either the left or right lane, the respective lane is left blank. This occurs only for a handful of frames in the test videos.*
 
-# 8. Superimposing the detected lane lines on the original image
+## 8. Superimposing the detected lane lines on the original image
 
 The extrapolated lane lines are superimposed on the original image using alpha-blending:
 
@@ -133,7 +139,7 @@ Final result 1    |  Final result 2
 :--------------------------:|:-------------------------:
 ![Coordinate System](/test_images_output/solidWhiteCurve.jpg)  |  ![Lane line extrapolation](/test_images_output/solidYellowCurve2.jpg)
 
-# Final results (Video)
+## Final results (Videos)
 
 [![](http://img.youtube.com/vi/BP8TPvVJabA/0.jpg)](http://www.youtube.com/watch?v=BP8TPvVJabA "")
 
@@ -142,7 +148,7 @@ Final result 1    |  Final result 2
 [![](http://img.youtube.com/vi/IeJD3yWnUV0/0.jpg)](http://www.youtube.com/watch?v=IeJD3yWnUV0 "")
 
 
-### Limitations of the pipeline
+## Limitations of the pipeline
 
 * The pipeline is optimized to work on video of resolution 960 x 540 pixels. Other resolutions and particularly different aspect ratios may need tweaking to achieve optimum results.
 * The camera orientation cannot be changed: If the camera is placed on the left or right of center, the RoI needs to be adapted accordingly.
@@ -152,7 +158,7 @@ Final result 1    |  Final result 2
 * ~~Spurious lane lines are not eliminated: If a line with a very different slope as before is detected, it will not be filtered out as long as it is in the RoI.~~
 
 
-### Possible improvements to the implementation
+## Possible improvements to the implementation
 
 * The pipeline can be generalized to work with any camera placement and any video resolution by detecting the orientation and adjusting the RoI accordingly.
 * The detection rate of white dashed lines, although very high, can be further improved.
