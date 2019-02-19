@@ -30,6 +30,8 @@ Instead we employ the HSL colorspace for detecting both yellow and white regions
 
 The Hue wheel on the left runs from 0-360 degrees and is essentially a color-picker. The distance from the middle of the color wheel is called the ‘Saturation’, or how much of a given hue is present. Looking closely at the colorwheel, it is apparent that the color becomes more pronounced and more vivid as one travels from the center of the circle to the edge. The Lightness value of an HSL color is in a third dimension, which actually makes the HSL system a cylinder, as shown in the right image. Both S and L components are specified as a percentage from 0-100%.
 
+HSL Colorwheel              |  HSL Cylinder
+:--------------------------:|:-------------------------:
 ![HSL Colorwheel](/desc_images/hue-wheel-300x300.jpg)         ![HSL Cylinder](/desc_images/hsl-cylinder-300x228.jpg)
 
 It is easy to see that the HSL ranges for white color is:
@@ -43,8 +45,11 @@ And the corresponding ranges for yellow color is:
 NOTE: The range for the respective HSL ranges are scaled to an 8-bit representation (0-255).
 
 The detected images are shown below:
-![Original_im1](/desc_images/orig_solidWhiteCurve.jpg)         ![HSL_yellow_white1](/desc_images/wy_solidWhiteCurve.jpg)
-![HSL Original_im2](/desc_images/orig_solidYellowCurve2.jpg)         ![HSL Cylinder](/desc_images/wy_solidYellowCurve2.jpg)
+
+Original images             |  Yellow and White regions in HSL space
+:--------------------------:|:-------------------------:
+![Original_im1](/desc_images/orig_solidWhiteCurve.jpg)  |  ![HSL_yellow_white1](/desc_images/wy_solidWhiteCurve.jpg)
+![HSL Original_im2](/desc_images/orig_solidYellowCurve2.jpg)   |   ![HSL Cylinder](/desc_images/wy_solidYellowCurve2.jpg)
 
 
 # 1. Applying Gaussian blurring
