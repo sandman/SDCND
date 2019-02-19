@@ -133,24 +133,37 @@ Final result 1    |  Final result 2
 :--------------------------:|:-------------------------:
 ![Coordinate System](/test_images_output/solidWhiteCurve.jpg)  |  ![Lane line extrapolation](/test_images_output/solidYellowCurve2.jpg)
 
-# Final result (Video)
+# Final results (Video)
 
 <!-- blank line -->
 <figure class="video_container">
-  <video controls="true" allowfullscreen="true" poster="test_images_output/solidWhiteCurve.jpg">
-    <source src="test_videos_output/challenge.mp4" type="video/mp4">
-  </video>
+  <iframe src="https://www.youtube.com/embed/enMumwvLAug" frameborder="0" allowfullscreen="true"> </iframe>
+</figure>
+<!-- blank line -->
+<!-- blank line -->
+<figure class="video_container">
+  <iframe src="https://www.youtube.com/embed/enMumwvLAug" frameborder="0" allowfullscreen="true"> </iframe>
+</figure>
+<!-- blank line -->
+<!-- blank line -->
+<figure class="video_container">
+  <iframe src="https://www.youtube.com/embed/enMumwvLAug" frameborder="0" allowfullscreen="true"> </iframe>
 </figure>
 <!-- blank line -->
 
-### 2. Limitations of the pipeline
+### Limitations of the pipeline
 
 * The pipeline is optimized to work on video of resolution 960 x 540 pixels. Other resolutions and particularly different aspect ratios may need tweaking to achieve optimum results.
 * The camera orientation cannot be changed: If the camera is placed on the left or right of center, the RoI needs to be adapted accordingly.
-* If lane lines are undetected in a frame, there is no history of previous detected lane lines to draw projections from. 
-* Spurious lane lines are not eliminated: If a line with a very different slope as before is detected, it will not be filtered out as long as it is in the RoI.
+* Optimum parameters of the Hough tranform have not been explored. Hence there are a few frames where no Hough lines are detected, leading to no lane annotations.
+* The lane detection does not work for curved lanes.
+* The top of the lane is currently hard-coded based on the RoI. It does not adapt according to the horizon level, leading to suboptimal extrapolation of the top of the lane.
+* ~~Spurious lane lines are not eliminated: If a line with a very different slope as before is detected, it will not be filtered out as long as it is in the RoI.~~
 
 
-### 3. Suggest possible improvements to your pipeline
+### Possible improvements to the implementation
 
-* The detection rate of white dashed lines can be further improved. 
+* The pipeline can be generalized to work with any camera placement and any video resolution by detecting the orientation and adjusting the RoI accordingly.
+* The detection rate of white dashed lines, although very high, can be further improved.
+* Polyfitting the detected Hough lines could use higher-order regression to accomodate curving lanes.
+* The extrapolation to the top of the lane can be dynamic based on the detected horizon level.
