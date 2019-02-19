@@ -135,7 +135,7 @@ Final result 1    |  Final result 2
 
 <!-- blank line -->
 <figure class="video_container">
-  <video controls="true" allowfullscreen="true" poster="path/to/poster_image.png">
+  <video controls="true" allowfullscreen="true" poster="test_images_output/solidWhiteCurve.jpg">
     <source src="test_videos_output/challenge.mp4" type="video/mp4">
   </video>
 </figure>
