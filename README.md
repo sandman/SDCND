@@ -107,9 +107,9 @@ The Hough Transform outputs a set of line segments ('Hough lines') detected in t
 The Hough lines are fed to a function that draws the final lane lines on the original image. 
 
 This consists of several steps:
-* Group left and right lane lines based on their slope: Left lane lines have negative slope; right lane lines have positive slope. This fact can be exploited to separate the Hough lines into left lane and right lane candidates.
+* *Group left and right lane lines based on their slope*: Left lane lines have negative slope; right lane lines have positive slope. This fact can be exploited to separate the Hough lines into left lane and right lane candidates.
 
-* Best-fit line: For each lane, we compute the best fit line based on a first-order linear regression. Numpy's [`polyfit`](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polyfit.html) function is used for this purpose:
+* *Best-fit line*: For each lane, we compute the best fit line based on a first-order linear regression. Numpy's [`polyfit`](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polyfit.html) function is used for this purpose:
 
 ```
         z_right = np.polyfit(x_right,y_right,1)
@@ -121,7 +121,9 @@ Coordinate System     |  Lane line extrapolation end-points
 :--------------------------:|:-------------------------:
 ![Coordinate System](/desc_images/coordinate_system.png)  |  ![Lane line extrapolation](/desc_images/line-segments-extrapolation.jpg)
 
-If a left lane or right lane is not detected by the Hough detector, no line is drawn. This occurs a few tens of times during the video. 
+* *Memory filter for fixing spurious lane lines*: Sometimes frames contain lane lines that are incorrectly detected i.e. they have a wrong slope and/or a wrong y-intercept. Hence there is a need to incorporate a memory in the lane annotation that averages the slope `m` and the y-intercept `b` of the past N frames for both left and right lanes. This moving average of the slope is compared with the current best-fit line's slope and if the latter deviates by more than a per-determined threshold, a new best-fit line is computed based on the moving average slope and y-intercept. This minimizes the presence of spurious lane lines.
+
+If no line is detected by the Hough filter on either the left or right lane, the respective lane is left blank. This occurs only for a handful of frames in the test videos.
 
 # 8. Superimposing the detected lane lines on the original image
 
