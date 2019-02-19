@@ -131,6 +131,16 @@ Final result 1    |  Final result 2
 :--------------------------:|:-------------------------:
 ![Coordinate System](/test_images_output/solidWhiteCurve.jpg)  |  ![Lane line extrapolation](/test_images_output/solidYellowCurve2.jpg)
 
+# Final result (Video)
+
+<!-- blank line -->
+<figure class="video_container">
+  <video controls="true" allowfullscreen="true" poster="path/to/poster_image.png">
+    <source src="test_videos_output/challenge.mp4" type="video/mp4">
+  </video>
+</figure>
+<!-- blank line -->
+
 ### 2. Limitations of the pipeline
 
 * The pipeline is optimized to work on video of resolution 960 x 540 pixels. Other resolutions and particularly different aspect ratios may need tweaking to achieve optimum results.
@@ -141,6 +151,4 @@ Final result 1    |  Final result 2
 
 ### 3. Suggest possible improvements to your pipeline
 
-A possible improvement would be to ...
-
-Another potential improvement could be to ...
+* The detection rate of white dashed lines can be further improved. 
