@@ -84,8 +84,8 @@ To isolate only the lane lines, we apply a RoI mask that is tailored to the dime
 
 RoI for isolating lanes     |  Masked lane lines in RoI
 :--------------------------:|:-------------------------:
-![RoI Image 1](/desc_images/roi_m_solidWhiteCurve.jpg)  |  ![RoI post Image 1](/desc_images/roi_solidWhiteCurve.jpg)]
-![RoI Image 2](/desc_images/roi_m_solidYellowCurve2.jpg)]  |   ![RoI post Image 2](/desc_images/roi_solidYellowCurve2.jpg)]
+![RoI Image 1](/desc_images/roi_m_solidWhiteCurve.jpg)  |  ![RoI post Image 1](/desc_images/roi_solidWhiteCurve.jpg)
+![RoI Image 2](/desc_images/roi_m_solidYellowCurve2.jpg)  |   ![RoI post Image 2](/desc_images/roi_solidYellowCurve2.jpg)
 
 # 6. Applying the Probabilistic Hough Transform for detecting lines
 
@@ -119,7 +119,7 @@ Here x_right and y_right contain the X coordinates and Y coordinates respectivel
 
 Coordinate System     |  Lane line extrapolation end-points
 :--------------------------:|:-------------------------:
-![Coordinate System](/desc_images/coordinate_system.png)  |  ![Lane line extrapolation][/desc_images/line-segments-extrapolation.jpg]
+![Coordinate System](/desc_images/coordinate_system.png)  |  ![Lane line extrapolation](/desc_images/line-segments-extrapolation.jpg)
 
 If a left lane or right lane is not detected by the Hough detector, no line is drawn. This occurs a few tens of times during the video. 
 
