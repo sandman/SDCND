@@ -140,11 +140,13 @@ Final result 1    |  Final result 2
   <iframe src="https://youtu.be/BP8TPvVJabA" frameborder="0" allowfullscreen="true"> </iframe>
 </figure>
 <!-- blank line -->
+
 <!-- blank line -->
 <figure class="video_container">
   <iframe src="https://youtu.be/IY2XCq3Uq44" frameborder="0" allowfullscreen="true"> </iframe>
 </figure>
 <!-- blank line -->
+
 <!-- blank line -->
 <figure class="video_container">
   <iframe src="https://youtu.be/IeJD3yWnUV0" frameborder="0" allowfullscreen="true"> </iframe>
