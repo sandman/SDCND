@@ -21,7 +21,16 @@ Some concrete requirements for the project are:
 ### 1. Pipeline description
 
 The video processing pipeline consists of the following steps:
-1. Detecting yellow and white regions in the input image
+
+# 1. Detecting yellow and white regions in the input image
+
+The first step in the pipeline is to isolate the white and yellow regions in the input RGB image. This allows the lane lines (which are white and/or yellow in color) to be clearly identified in the input image. The RGB colorspace is not ideal for detecting yellow lines, particularly in low-light/shadowed images. This is because the RGB colorspace is highly sensitive to changes in brightness: hence in images with shadows or bright sunlight, the range for Yellow lanes in the RGB model will vary a lot. For a more in-depth description of this, refer to this [paper](https://www.researchgate.net/publication/220777443_An_Adaptive_Method_for_Lane_Marking_Detection_Based_on_HSI_Color_Model)
+
+Instead we employ the HSL colorspace for detecting both yellow and white regions in the input image. HSL stands for Hue, Saturation and Lightness. The main advantage of HSL (over RGB) is that it makes it easy to select a color quickly and furthermore, it is easier to specify varying levels of lightness and saturation for a particular color. This is shown below:
+
+![HSL Colorwheel](/desc_images/hue-wheel-300x300.jpg) ![HSL Cylinder](/desc_images/hsl-cylinder-300x228.jpg)
+
+
 1. Applying Gaussian blurring
 1. Grayscaling the image
 1. Applying Canny edge detection
