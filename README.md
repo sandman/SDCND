@@ -26,12 +26,30 @@ The video processing pipeline consists of the following steps:
 
 The first step in the pipeline is to isolate the white and yellow regions in the input RGB image. This allows the lane lines (which are white and/or yellow in color) to be clearly identified in the input image. The RGB colorspace is not ideal for detecting yellow lines, particularly in low-light/shadowed images. This is because the RGB colorspace is highly sensitive to changes in brightness: hence in images with shadows or bright sunlight, the range for Yellow lanes in the RGB model will vary a lot. For a more in-depth description of this, refer to this [paper](https://www.researchgate.net/publication/220777443_An_Adaptive_Method_for_Lane_Marking_Detection_Based_on_HSI_Color_Model)
 
-Instead we employ the HSL colorspace for detecting both yellow and white regions in the input image. HSL stands for Hue, Saturation and Lightness. The main advantage of HSL (over RGB) is that it makes it easy to select a color quickly and furthermore, it is easier to specify varying levels of lightness and saturation for a particular color. This is shown below:
+Instead we employ the HSL colorspace for detecting both yellow and white regions in the input image. HSL stands for Hue, Saturation and Lightness. The main advantage of HSL (over RGB) is that it makes it easy to select a color quickly and furthermore, it is easier to specify varying levels of lightness and saturation for a particular color. The HSL colorspace is shown below.
 
-![HSL Colorwheel](/desc_images/hue-wheel-300x300.jpg) ![HSL Cylinder](/desc_images/hsl-cylinder-300x228.jpg)
+The Hue wheel on the left runs from 0-360 degrees and is essentially a color-picker. The distance from the middle of the color wheel is called the ‘Saturation’, or how much of a given hue is present. Looking closely at the colorwheel, it is apparent that the color becomes more pronounced and more vivid as one travels from the center of the circle to the edge. The Lightness value of an HSL color is in a third dimension, which actually makes the HSL system a cylinder, as shown in the right image. Both S and L components are specified as a percentage from 0-100%.
+
+![HSL Colorwheel](/desc_images/hue-wheel-300x300.jpg)         ![HSL Cylinder](/desc_images/hsl-cylinder-300x228.jpg)
+
+It is easy to see that the HSL ranges for white color is:
+* White Min: [0, 200, 0]
+* White Max: [255, 255, 255]
+
+And the corresponding ranges for yellow color is:
+* Yellow Min: [10, 0, 100]
+* Yellow Max: [40, 255, 255]
+
+NOTE: The range for the respective HSL ranges are scaled to an 8-bit representation (0-255).
+
+The detected images are shown below:
+![Original_im1](/desc_images/orig_solidWhiteCurve.jpg)         ![HSL_yellow_white1](/desc_images/wy_solidWhiteCurve.jpg)
+![HSL Original_im2](/desc_images/orig_solidYellowCurve2.jpg)         ![HSL Cylinder](/desc_images/wy_solidYellowCurve2.jpg)
 
 
-1. Applying Gaussian blurring
+# 1. Applying Gaussian blurring
+
+
 1. Grayscaling the image
 1. Applying Canny edge detection
 1. Masking a region of interest (RoI) to only select potential lane lines
