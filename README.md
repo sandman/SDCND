@@ -52,7 +52,7 @@ Original images             |  Yellow and White regions
 ![HSL Original_im2](/desc_images/orig_solidYellowCurve2.jpg)   |   ![HSL Cylinder](/desc_images/wy_solidYellowCurve2.jpg)
 
 
-# 1. Applying Gaussian blurring
+# 2. Applying Gaussian blurring
 
 Gaussian blurring blurs sharp gradients and noise in the input image making it easier to detect pronounced edges later in the pipeline. We use a kernel of size 13 in order to ensure robust edge detection. Higher order kernels require increased computation time, which is an important factor for real-time video processing.
 
@@ -61,25 +61,28 @@ Yellow/White images            |  Gaussian blur with a 13x13 kernel
 ![Yellow_white_im1](/desc_images/wy_solidWhiteCurve.jpg)  |  ![Blur_Yellow_white_im1](/desc_images/blur_solidWhiteCurve.jpg)
 ![Yellow_white_im2](/desc_images/wy_solidYellowCurve2.jpg)   |   ![Blur Yellow_white_im2](/desc_images/blur_solidYellowCurve2.jpg)
 
-# 1. Grayscaling the image
+# 3. Grayscaling the image
 
 Next, we apply grayscaling on the blurred images, which makes it easier (and faster) to apply the Canny edge-detection algorithm in the following step:
-Grayscaled image 1              |  Grayscaled image 2
+
+Grayscaled images           |    Canny edge detection
 :--------------------------:|:-------------------------:
 ![Grayscaled Image 1](/desc_images/gray_solidWhiteCurve.jpg)  |  ![Grayscaled Image 2](/desc_images/gray_solidWhiteCurve.jpg)
 
 # 1. Applying Canny edge detection
 
-To the grayscaled images, we apply the well-known Canny edge detection algorithm with low and high thresholds set according to the pixel intensities in the input image. First, we compute the median single-channel pixel intensity in the input grayscale image: v. The low and high thresholds are respectively v/3 and 2\*v/3.   
-   Grayscaled images        |    Canny edge detection
+To the grayscaled images, we apply the well-known Canny edge detection algorithm with low and high thresholds set according to the pixel intensities in the input image. First, we compute the median single-channel pixel intensity in the input grayscale image: v. The low and high thresholds are respectively v\/3 and 2\*v/3.
+
+Grayscaled images           |    Canny edge detection
 :--------------------------:|:-------------------------:
-![Grayscaled Image 1](/desc_images/gray_solidWhiteCurve.jpg)  |  ![Canny Image 1](/desc_images/canny_solidWhiteCurve.jpg)]
-![Grayscaled Image 2](/desc_images/gray_solidYellowCurve2.jpg)  |  ![Canny Image 2](/desc_images/canny_solidYellowCurve2.jpg)]
+![Grayscaled Image 1](/desc_images/gray_solidWhiteCurve.jpg)  |  ![Canny Image 1](/desc_images/canny_solidWhiteCurve.jpg)
+![Grayscaled Image 2](/desc_images/gray_solidYellowCurve2.jpg)  |  ![Canny Image 2](/desc_images/canny_solidYellowCurve2.jpg)
 
 # 1. Masking a region of interest (RoI) to only select potential lane lines
 
 To isolate only the lane lines, we apply a RoI mask that is tailored to the dimensions of the input image:
-   RoI for isolating lanes  |  Masked lane lines in RoI
+
+RoI for isolating lanes     |  Masked lane lines in RoI
 :--------------------------:|:-------------------------:
 ![RoI Image 1](/desc_images/roi_m__solidWhiteCurve.jpg)  |  ![RoI post Image 1](/desc_images/roi_solidWhiteCurve.jpg)]
 ![RoI Image 2](/desc_images/roi_m_solidYellowCurve2.jpg)]  |   ![RoI post Image 2](/desc_images/roi_solidYellowCurve2.jpg)]
