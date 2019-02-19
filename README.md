@@ -32,7 +32,7 @@ The Hue wheel on the left runs from 0-360 degrees and is essentially a color-pic
 
 HSL Colorwheel              |  HSL Cylinder
 :--------------------------:|:-------------------------:
-![HSL Colorwheel](/desc_images/hue-wheel-300x300.jpg)         ![HSL Cylinder](/desc_images/hsl-cylinder-300x228.jpg)
+![HSL Colorwheel](/desc_images/hue-wheel-300x300.jpg)    |     ![HSL Cylinder](/desc_images/hsl-cylinder-300x228.jpg)
 
 It is easy to see that the HSL ranges for white color is:
 * White Min: [0, 200, 0]
@@ -46,7 +46,7 @@ NOTE: The range for the respective HSL ranges are scaled to an 8-bit representat
 
 The detected images are shown below:
 
-Original images             |  Yellow and White regions in HSL space
+Original images             |  Yellow and White regions
 :--------------------------:|:-------------------------:
 ![Original_im1](/desc_images/orig_solidWhiteCurve.jpg)  |  ![HSL_yellow_white1](/desc_images/wy_solidWhiteCurve.jpg)
 ![HSL Original_im2](/desc_images/orig_solidYellowCurve2.jpg)   |   ![HSL Cylinder](/desc_images/wy_solidYellowCurve2.jpg)
@@ -54,10 +54,36 @@ Original images             |  Yellow and White regions in HSL space
 
 # 1. Applying Gaussian blurring
 
+Gaussian blurring blurs sharp gradients and noise in the input image making it easier to detect pronounced edges later in the pipeline. We use a kernel of size 13 in order to ensure robust edge detection. Higher order kernels require increased computation time, which is an important factor for real-time video processing.
 
-1. Grayscaling the image
-1. Applying Canny edge detection
-1. Masking a region of interest (RoI) to only select potential lane lines
+Yellow/White images            |  Gaussian blur with a 13x13 kernel 
+:--------------------------:|:-------------------------:
+![Yellow_white_im1](/desc_images/wy_solidWhiteCurve.jpg)  |  ![Blur_Yellow_white_im1](/desc_images/blur_solidWhiteCurve.jpg)
+![Yellow_white_im2](/desc_images/wy_solidYellowCurve2.jpg)   |   ![Blur Yellow_white_im2](/desc_images/blur_solidYellowCurve2.jpg)
+
+# 1. Grayscaling the image
+
+Next, we apply grayscaling on the blurred images, which makes it easier (and faster) to apply the Canny edge-detection algorithm in the following step:
+
+:--------------------------:|:-------------------------:
+![Grayscaled Image 1](/desc_images/gray_solidWhiteCurve.jpg)  |  ![Grayscaled Image 2](/desc_images/gray_solidWhiteCurve.jpg)
+
+# 1. Applying Canny edge detection
+
+To the grayscaled images, we apply the well-known Canny edge detection algorithm with low and high thresholds set according to the pixel intensities in the input image. First, we compute the median single-channel pixel intensity in the input grayscale image: v. The low and high thresholds are respectively v/3 and 2\*v/3.   
+                    Canny edge detection
+:--------------------------:|:-------------------------:
+![Grayscaled Image 1](/desc_images/gray_solidWhiteCurve.jpg)  |  ![Canny Image 1](/desc_images/canny_solidWhiteCurve.jpg)]
+![Grayscaled Image 2](/desc_images/gray_solidYellowCurve2.jpg)  |  ![Canny Image 2](/desc_images/canny_solidYellowCurve2.jpg)]
+
+# 1. Masking a region of interest (RoI) to only select potential lane lines
+
+To isolate only the lane lines, we apply a RoI mask that is tailored to the dimensions of the input image:
+                    RoI for isolating lane lines
+:--------------------------:|:-------------------------:
+![RoI Image 1](/desc_images/roi_m__solidWhiteCurve.jpg)  |  ![RoI post Image 1](/desc_images/roi_solidWhiteCurve.jpg)]
+![RoI Image 2](/desc_images/roi_m_solidYellowCurve2.jpg)]  |   ![RoI post Image 2](/desc_images/roi_solidYellowCurve2.jpg)]
+
 1. Applying the Probabilistic Hough Transform for detecting lines
 1. Extrapolating the lane lines to the end and start of the road
 1. Superimposing the detected lane lines on the original image
