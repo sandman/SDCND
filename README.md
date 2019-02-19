@@ -127,15 +127,16 @@ If a left lane or right lane is not detected by the Hough detector, no line is d
 
 The extrapolated lane lines are superimposed on the original image using alpha-blending:
 
-![alt text][image1]
+Final result 1    |  Final result 2
+:--------------------------:|:-------------------------:
+![Coordinate System](/desc_images/solidWhiteCurve.jpg)  |  ![Lane line extrapolation](/desc_images/solidYellowCurve2.jpg)
 
+### 2. Limitations of the pipeline
 
-### 2. Identify potential shortcomings with your current pipeline
-
-
-One potential shortcoming would be what would happen when ... 
-
-Another shortcoming could be ...
+* The pipeline is optimized to work on video of resolution 960 x 540 pixels. Other resolutions and particularly different aspect ratios may need tweaking to achieve optimum results.
+* The camera orientation cannot be changed: If the camera is placed on the left or right of center, the RoI needs to be adapted accordingly.
+* If lane lines are undetected in a frame, there is no history of previous detected lane lines to draw projections from. 
+* Spurious lane lines are not eliminated: If a line with a very different slope as before is detected, it will not be filtered out as long as it is in the RoI.
 
 
 ### 3. Suggest possible improvements to your pipeline
