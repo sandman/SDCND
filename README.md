@@ -117,9 +117,9 @@ This consists of several steps:
 
 * **Best-fit line:** For each lane, we compute the best fit line based on a first-order linear regression. Numpy's [`polyfit`](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polyfit.html) function is used for this purpose:
 
-        ```
-                z_right = np.polyfit(x_right,y_right,1)
-        ```
+```
+z_right = np.polyfit(x_right,y_right,1)
+```
 
 Here x_right and y_right contain the X coordinates and Y coordinates respectively of the Hough Lines corresponding to the Right lane. consists of a tuple `(m, b)` which describes the parameters of the best-fit line: `y = mx + b`. This is the line to be extrapolated to the start and end of the lane. we identify the coordinates of the endpoints of the extrapolated lane line as shown by the yellow points in the right figure below. Note that the coordinate system for vertices differs from the coordinate system for the image which are read as matrices by OpenCV and follow a row-major indexing.
 
