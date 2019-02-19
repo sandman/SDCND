@@ -135,22 +135,12 @@ Final result 1    |  Final result 2
 
 # Final results (Video)
 
-<!-- blank line -->
-<figure class="video_container">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/BP8TPvVJabA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></figure>
-<!-- blank line -->
+[![](http://img.youtube.com/vi/BP8TPvVJabA/0.jpg)](http://www.youtube.com/watch?v=BP8TPvVJabA "")
 
-<!-- blank line -->
-<figure class="video_container">
-  <iframe src="https://youtu.be/IY2XCq3Uq44" frameborder="0" allowfullscreen="true"> </iframe>
-</figure>
-<!-- blank line -->
+[![](http://img.youtube.com/vi/IY2XCq3Uq44/0.jpg)](http://www.youtube.com/watch?v=IY2XCq3Uq44 "")
 
-<!-- blank line -->
-<figure class="video_container">
-  <iframe src="https://youtu.be/IeJD3yWnUV0" frameborder="0" allowfullscreen="true"> </iframe>
-</figure>
-<!-- blank line -->
+[![](http://img.youtube.com/vi/IeJD3yWnUV0/0.jpg)](http://www.youtube.com/watch?v=IeJD3yWnUV0 "")
+
 
 ### Limitations of the pipeline
 
