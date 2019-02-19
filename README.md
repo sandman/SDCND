@@ -65,11 +65,11 @@ Yellow/White images            |  Gaussian blur with a 13x13 kernel
 
 Next, we apply grayscaling on the blurred images, which makes it easier (and faster) to apply the Canny edge-detection algorithm in the following step:
 
-Grayscaled images           |    Canny edge detection
+Grayscaled image 1           |    Grayscaled image 2
 :--------------------------:|:-------------------------:
 ![Grayscaled Image 1](/desc_images/gray_solidWhiteCurve.jpg)  |  ![Grayscaled Image 2](/desc_images/gray_solidWhiteCurve.jpg)
 
-# 1. Applying Canny edge detection
+# 4. Applying Canny edge detection
 
 To the grayscaled images, we apply the well-known Canny edge detection algorithm with low and high thresholds set according to the pixel intensities in the input image. First, we compute the median single-channel pixel intensity in the input grayscale image: v. The low and high thresholds are respectively v\/3 and 2\*v/3.
 
@@ -78,18 +78,47 @@ Grayscaled images           |    Canny edge detection
 ![Grayscaled Image 1](/desc_images/gray_solidWhiteCurve.jpg)  |  ![Canny Image 1](/desc_images/canny_solidWhiteCurve.jpg)
 ![Grayscaled Image 2](/desc_images/gray_solidYellowCurve2.jpg)  |  ![Canny Image 2](/desc_images/canny_solidYellowCurve2.jpg)
 
-# 1. Masking a region of interest (RoI) to only select potential lane lines
+# 5. Masking a region of interest (RoI) to only select potential lane lines
 
 To isolate only the lane lines, we apply a RoI mask that is tailored to the dimensions of the input image:
 
 RoI for isolating lanes     |  Masked lane lines in RoI
 :--------------------------:|:-------------------------:
-![RoI Image 1](/desc_images/roi_m__solidWhiteCurve.jpg)  |  ![RoI post Image 1](/desc_images/roi_solidWhiteCurve.jpg)]
+![RoI Image 1](/desc_images/roi_m_solidWhiteCurve.jpg)  |  ![RoI post Image 1](/desc_images/roi_solidWhiteCurve.jpg)]
 ![RoI Image 2](/desc_images/roi_m_solidYellowCurve2.jpg)]  |   ![RoI post Image 2](/desc_images/roi_solidYellowCurve2.jpg)]
 
-1. Applying the Probabilistic Hough Transform for detecting lines
-1. Extrapolating the lane lines to the end and start of the road
-1. Superimposing the detected lane lines on the original image
+# 6. Applying the Probabilistic Hough Transform for detecting lines
+
+We next apply OpenCV's Probablistic Hough Transform for detecting lane lines in the RoI. The algorithm is implemented by the HoughLinesP function with the following parameters: 
+
+```python
+rho = 1 # distance resolution in pixels of the Hough grid
+threshold = 20    # minimum number of votes (intersections in Hough grid cell)
+min_line_len = 20  # minimum number of pixels making up a line
+max_line_gap = 300  # maximum gap in pixels between connectable line segments
+```
+The Hough Transform outputs a set of line segments ('Hough lines') detected in the input image. The line segments are specified by the x,y coordinates of their endpoints in a list, like so: [x1, y1, x2, y2]. A list consisting of the detected Hough lines is output by the Hough Transform, like so:
+```
+[[  0 539 959 539]], [[  0 537 959 537]], [[  0 538 959 538]], [[521 342 958 536]], [[524 342 957 535]], [[ 11 536 448 342]], [[  1 536 436 342]], [[  8 536 445 342]], [[517 342 954 536]], [[  2 536 439 342]], [[511 342 948 536]], [[  6 536 442 342]], [[514 342 951 536]], [[527 342 805 466]], [[232 431 432 342]], [[ 15 536 452 342]], [[529 342 686 412]], [[487 342 946 536]], [[558 354 874 536]], [[446 342 551 351]], [[454 342 539 348]], [[291 462 438 343]], [[282 460 425 344]], [[589 368 893 536]], [[520 342 956 536]], [[508 342 930 529]], [[424 344 549 350]], [[102 490 434 342]], [[475 342 540 346]], [[426 345 496 348]], [[281 462 429 342]], [[405 353 498 342]]
+```
+
+# 7. Extrapolating the lane lines to the end and start of the road
+
+The Hough lines are fed to a function that draws the final lane lines on the original image. 
+
+This consists of several steps:
+* Group left and right lane lines based on their slope: Left lane lines have negative slope; right lane lines have positive slope. This fact can be exploited to separate the Hough lines into left lane and right lane candidates.
+
+* Best-fit line: For each lane, we compute the best fit line based on a first-order linear regression. Numpy's (polyfit)[https://docs.scipy.org/doc/numpy/reference/generated/numpy.polyfit.html] function is used for this purpose:
+
+```
+        z_right = np.polyfit(x_right,y_right,1)
+```
+
+Here x_right and y_right contain the X coordinates and Y coordinates respectively of the Hough Lines corresponding to the Right lane. consists of a tuple (m, b) which describes the parameters of the best-fit line: y = mx + b
+
+
+# 8. Superimposing the detected lane lines on the original image
 
 ![alt text][image1]
 
